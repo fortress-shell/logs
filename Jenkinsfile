@@ -1,5 +1,13 @@
 pipeline {
-  stage('Fuck') {
-    echo 'fcukf'
-  }
+    agent any
+    environment {
+        CI = 'true'
+    }
+    stages {
+        stage('Prebuild') {
+            steps {
+                echo "fuck"
+            }
+        }
+    }
 }
