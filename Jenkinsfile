@@ -1,5 +1,5 @@
 pipeline {
   stage('Fuck') {
-    echo 'fcuk'
+    echo 'fcukf'
   }
 }
