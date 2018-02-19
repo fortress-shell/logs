@@ -1,7 +1,10 @@
 {
-  "kafka-options": {
-    "autoCommit": true,
-    "fetchMaxWaitMs": 1000,
-    "fetchMaxBytes": 1048576
+  "kafka": {
+    "topic": "dc1",
+    "options": {
+      "autoCommit": true,
+      "fetchMaxWaitMs": 1000,
+      "fetchMaxBytes": 1048576
+    }
   }
 }
