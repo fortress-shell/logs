@@ -1,1 +1,7 @@
-{}
+{
+  "kafka-options": {
+    "autoCommit": true,
+    "fetchMaxWaitMs": 1000,
+    "fetchMaxBytes": 1048576
+  }
+}
