@@ -1,4 +1,3 @@
-
 const INSERT_INTO_LOGS = `
     INSERT INTO logs(
       status,
@@ -6,16 +5,18 @@ const INSERT_INTO_LOGS = `
     ) VALUES(:status, :timestamps);
 `;
 
-function LogsController(io, db) {
-  return {
-    async log(message) {
-      await db.query(INSERT_INTO_LOGS, {
-        replacements: message,
-        type: db.QueryTypes.INSERT,
-      });
-      io.to(message.roomId).emit(content);
-    },
-  };
+class LogsController {
+  constructor(io, db) {
+    this.io = io;
+    this.db = db;
+  }
+  async log(message) {
+    await this.db.query(INSERT_INTO_LOGS, {
+      replacements: message,
+      type: this.db.QueryTypes.INSERT,
+    });
+    this.io.to(message.roomId).emit(content);
+  }
 }
 
 module.exports = LogsController;

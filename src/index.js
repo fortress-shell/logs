@@ -9,13 +9,11 @@ const topics = [{
     topic: options.get('KAFKA_TOPIC'),
 }];
 const consumer = new HighLevelConsumer(client, topics, options);
-const controller = new LogsController(io, db);
+const logs = new LogsController(io, db);
 
-consumer.on('message', controller.log);
+consumer.on('message', logs.log.bind(logs));
 
-consumer.on('error', function(err) {
-  console.log('error', err);
-});
+consumer.on('error', console.log);
 
 function onShutdown() {
   client.close();
