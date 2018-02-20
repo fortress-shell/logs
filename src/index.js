@@ -1,22 +1,27 @@
-const {HighLevelConsumer} = require('kafka-node');
+'use strict';
+const consumerGroup = require('src/resources/kafka');
 const io = require('src/resources/io');
-const client = require('src/resources/kafka');
 const db = require('src/resources/db');
-const config = require('src/config');
-const {options, topics} = config.get('kafka');
-const consumer = new HighLevelConsumer(client, topics, options);
-const logs = new LogsController(io, db);
+const logsStream = require('src/streams/logs');
+const jsonSteam = require('src/streams/json');
+const logger = require('src/utils/logger');
 
-consumer.on('message', logs.log.bind(logs));
-consumer.on('error', onShutdown);
+consumerGroup
+  .pipe(jsonSteam())
+  .pipe(logsStream(io, db));
 
 /**
  * Gracefull shutdown handler
  */
 function onShutdown() {
-  client.close(() => db.close());
+  logger.log('Going to shutdown!');
+  consumerGroup.close(() => {
+    db.close();
+    logger.log('Closed!');
+    process.exit(0);
+  });
 }
 
-for (const event of ['SIGINT', 'SIGTERM']) {
+for (const event of ['SIGTERM', 'SIGINT']) {
   process.once(event, onShutdown);
 }

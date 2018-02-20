@@ -1,3 +1,4 @@
+'use strict';
 const debug = require('debug');
 const info = debug('logs:info');
 const warn = debug('logs:warn');

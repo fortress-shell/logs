@@ -1,20 +1,19 @@
 'use strict';
-const dotenv = require('dotenv');
 const nconf = require('nconf');
-const result = dotenv.config();
-if (result.error) {
-  throw result.error;
-}
+const path = require('path');
 nconf.env([
   'NODE_ENV',
+  'DB_URL',
   'REDIS_URL',
+  'KAFKA_URL',
 ]);
 nconf.defaults({
   NODE_ENV: 'development',
 });
 nconf.required([
   'REDIS_URL',
-  'keyb',
+  'DB_URL',
+  'KAFKA_URL',
 ]);
 const NODE_ENV = nconf.get('NODE_ENV');
 nconf.file(NODE_ENV, {

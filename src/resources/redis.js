@@ -1,3 +1,4 @@
+'use strict';
 const Redis = require('ioredis');
 const config = require('src/config');
 const REDIS_URL = config.get('REDIS_URL');

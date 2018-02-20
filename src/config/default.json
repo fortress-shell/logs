@@ -1,10 +1,24 @@
 {
   "kafka": {
-    "topic": "dc1",
+    "topics": ["dc1"],
     "options": {
-      "autoCommit": true,
-      "fetchMaxWaitMs": 1000,
-      "fetchMaxBytes": 1048576
+      "groupId": "ExampleTestGroup",
+      "sessionTimeout": 15000,
+      "protocol": ["roundrobin"],
+      "asyncPush": false,
+      "id": "consumer1",
+      "fromOffset": "latest"
     }
+  },
+  "db": {
+    "dialect": "mysql",
+    "operatorsAliases": false,
+    "pool": {
+      "max": 5,
+      "min": 0,
+      "acquire": 30000,
+      "idle": 10000
+    },
+    "logging": false
   }
 }

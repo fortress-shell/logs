@@ -1,17 +1,15 @@
-const Sequelize = require('sequelize');
-const sequelize = require('src/resources/db');
-
-module.exports = sequelize.define('log', {
+'use strict';
+module.exports = (sequelize, DataTypes) => sequelize.define('log', {
   buildId: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     field: 'build_id',
     allowNull: false,
   },
   position: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
-  content: Sequelize.STRING,
+  content: DataTypes.STRING,
 }, {
   tableName: 'logs',
   underscored: true,
