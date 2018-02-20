@@ -9,7 +9,7 @@ const consumer = new HighLevelConsumer(client, topics, options);
 const logs = new LogsController(io, db);
 
 consumer.on('message', logs.log.bind(logs));
-consumer.on('error', console.log);
+consumer.on('error', onShutdown);
 
 function onShutdown() {
   client.close(() => {
