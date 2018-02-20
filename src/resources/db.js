@@ -1,5 +1,4 @@
-'use strict';
-const Sequalize = require('sequalize');
+const Sequelize = require('sequalize');
 const config = require('src/config');
 const DB_URL = config.get('DB_URL');
 

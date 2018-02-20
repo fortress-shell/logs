@@ -11,7 +11,7 @@ module.exports = sequelize.define('log', {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
-  content: Sequelize.STRING
+  content: Sequelize.STRING,
 }, {
   tableName: 'logs',
   underscored: true,

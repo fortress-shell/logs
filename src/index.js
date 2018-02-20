@@ -1,4 +1,3 @@
-'use strict';
 const {HighLevelConsumer} = require('kafka-node');
 const io = require('src/resources/io');
 const client = require('src/resources/kafka');
@@ -11,10 +10,11 @@ const logs = new LogsController(io, db);
 consumer.on('message', logs.log.bind(logs));
 consumer.on('error', onShutdown);
 
+/**
+ * Gracefull shutdown handler
+ */
 function onShutdown() {
-  client.close(() => {
-    db.close();
-  });
+  client.close(() => db.close());
 }
 
 for (const event of ['SIGINT', 'SIGTERM']) {
