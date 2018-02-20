@@ -12,7 +12,9 @@ consumer.on('message', logs.log.bind(logs));
 consumer.on('error', console.log);
 
 function onShutdown() {
-  client.close();
+  client.close(() => {
+    db.close();
+  });
 }
 
 for (const event of ['SIGINT', 'SIGTERM']) {
