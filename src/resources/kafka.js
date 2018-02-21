@@ -7,4 +7,4 @@ const consumerOptions = Object.assign(options, {
   kafkaHost: KAFKA_URL,
 });
 
-module.exports = new ConsumerGroupStream(consumerOptions, topics);
+module.exports = () => new ConsumerGroupStream(consumerOptions, topics);

@@ -1,12 +1,12 @@
 'use strict';
-const consumerGroup = require('src/resources/kafka');
+const consumerGroupStream = require('src/resources/kafka');
 const io = require('src/resources/io');
 const db = require('src/resources/db');
 const logsStream = require('src/streams/logs');
 const jsonSteam = require('src/streams/json');
 const logger = require('src/utils/logger');
 
-consumerGroup
+const stream = consumerGroupStream()
   .pipe(jsonSteam())
   .pipe(logsStream(io, db));
 
@@ -15,7 +15,7 @@ consumerGroup
  */
 function onShutdown() {
   logger.log('Going to shutdown!');
-  consumerGroup.close(() => {
+  stream.close(() => {
     db.close();
     logger.log('Closed!');
     process.exit(0);
