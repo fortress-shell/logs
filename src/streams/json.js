@@ -1,3 +1,4 @@
+'use strict';
 const {Transform} = require('streams');
 
 /**
@@ -8,10 +9,10 @@ function jsonStream() {
   return new Transform({
     objectMode: true,
     decodeStrings: true,
-    transform(message, encoding, next) {
+    async transform(message, encoding, next) {
       try {
-        message.value = JSON.parse(message.value);
-        next(null, message);
+        const content = JSON.parse(message.value);
+        next(null, content);
       } catch(e) {
         next(e);
       }

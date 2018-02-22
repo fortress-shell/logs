@@ -7,17 +7,11 @@ const {INSERT_LOGS} = require('src/queries/logs');
  * @param  {[type]} io [description]
  * @return {[type]}    [description]
  */
-function logsStream(db, io) {
+function dbStream(db) {
   return new Writable({
     objectMode: true,
-    async write(message, encoding, next) {
-      try {
-        await db.none(INSERT_LOGS, message);
-        io.to(message.roomId).emit(message);
-        next();
-      } catch (e) {
-        return next(e);
-      }
+    write(message, encoding, next) {
+      db.none(INSERT_LOGS, message).then(next, next);
     }
   });
 }
