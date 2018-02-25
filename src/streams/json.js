@@ -1,22 +1,22 @@
 'use strict';
-const {Transform} = require('streams');
+const {Transform} = require('stream');
 
 /**
- * [jsonStream description]
+ * Json transformer stream
  * @return {[type]} [description]
  */
 function jsonStream() {
   return new Transform({
     objectMode: true,
     decodeStrings: true,
-    async transform(message, encoding, next) {
+    transform(message, encoding, next) {
       try {
         const content = JSON.parse(message.value);
         next(null, content);
       } catch(e) {
         next(e);
       }
-    }
+    },
   });
 }
 

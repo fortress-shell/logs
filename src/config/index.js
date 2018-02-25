@@ -3,17 +3,19 @@ const nconf = require('nconf');
 const path = require('path');
 nconf.env([
   'NODE_ENV',
-  'DB_URL',
+  'DATABASE_URL',
   'REDIS_URL',
   'KAFKA_URL',
+  'UNIQUE_CONSTRAINT',
 ]);
 nconf.defaults({
   NODE_ENV: 'development',
 });
 nconf.required([
   'REDIS_URL',
-  'DB_URL',
+  'DATABASE_URL',
   'KAFKA_URL',
+  'UNIQUE_CONSTRAINT',
 ]);
 const NODE_ENV = nconf.get('NODE_ENV');
 nconf.file(NODE_ENV, {

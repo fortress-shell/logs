@@ -1,29 +1,37 @@
 'use strict';
-const consumerGroupStream = require('src/resources/kafka');
 const io = require('src/resources/io');
-const db = require('src/resources/db');
-const dbStream = require('src/streams/db');
-const jsonSteam = require('src/streams/json');
-const wsSteam = require('src/streams/ws');
+const {db, pgp} = require('src/resources/db');
+const redis = require('src/resources/redis');
 const logger = require('src/utils/logger');
-const consumerGroupStream$ = consumerGroupStream();
-const logsStream$ = consumerGroupStream$.pipe(jsonSteam());
+const jsonStream = require('src/streams/json')();
+const logsStream = require('src/streams/logs')(db, io);
+const kafkaStream = require('src/resources/kafka')();
 
-logsStream$.pipe(dbStream(db));
-logsStream$.pipe(ioStream(io));
+kafkaStream
+  .on('error', shutdown)
+  .pipe(jsonStream)
+  .on('error', shutdown)
+  .pipe(logsStream)
+  .on('error', shutdown);
 
-/**
- * Gracefull shutdown handler
- */
-function onShutdown() {
-  logger.log('Going to shutdown!');
-  consumerGroupStream$.close(() => {
-    db.close();
-    logger.log('Closed!');
-    process.exit(0);
+function shutdown(topLevelError) {
+  if (topLevelError) {
+    logger.warn(topLevelError);
+    process.exit(1);
+  }
+  kafkaStream.close((err) => {
+    if (err || topLevelError) {
+      logger.warn(err);
+      process.exit(1);
+    }
+    logger.info('Going to shutdown!');
+    setTimeout(() => {
+        redis.end();
+        pgp.end();
+        logger.info('Goodbye!');
+        process.exit();
+    }, 10000);
   });
 }
 
-for (const event of ['SIGTERM', 'SIGINT']) {
-  process.once(event, onShutdown);
-}
+process.once('SIGINT', shutdown);

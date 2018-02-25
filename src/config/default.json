@@ -1,24 +1,13 @@
 {
   "kafka": {
-    "topics": ["dc1"],
+    "datacenters": ["dc1", "dc2"],
     "options": {
-      "groupId": "ExampleTestGroup",
+      "groupId": "logs",
       "sessionTimeout": 15000,
       "protocol": ["roundrobin"],
-      "asyncPush": false,
-      "id": "consumer1",
-      "fromOffset": "latest"
+      "fromOffset": "latest",
+      "highWaterMark": 100,
+      "maxTickMessages": 1000
     }
-  },
-  "db": {
-    "dialect": "mysql",
-    "operatorsAliases": false,
-    "pool": {
-      "max": 5,
-      "min": 0,
-      "acquire": 30000,
-      "idle": 10000
-    },
-    "logging": false
   }
 }
