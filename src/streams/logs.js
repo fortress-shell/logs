@@ -1,3 +1,4 @@
+'use strict';
 const {Writable} = require('stream');
 const {INSERT_LOG} = require('src/queries/log');
 const logger = require('src/utils/logger');
@@ -16,7 +17,7 @@ function logsStream(db, io) {
     async write(message, encoding, next) {
       try {
         await db.none(INSERT_LOG, message);
-        io.to(message.build_id).emit(message);
+        io.to(message.build_id).emit('log:new', message);
         logger.info(message);
         next();
       } catch(err) {
