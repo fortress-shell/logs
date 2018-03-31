@@ -15,9 +15,3 @@ exports.INSERT_LOG = `
     $(content)
   );
 `;
-
-// build_id
-// position
-// content
-// stage
-// command

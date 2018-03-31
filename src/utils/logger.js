@@ -1,13 +1,7 @@
 'use strict';
 const debug = require('debug');
-const info = debug('logs:info');
-const warn = debug('logs:warn');
-const log = debug('logs:log');
-const error = debug('logs:error');
 
-module.exports = {
-  info,
-  warn,
-  log,
-  error,
-};
+exports.info = debug('logs:info');
+exports.warn = debug('logs:warn');
+exports.log = debug('logs:log');
+exports.error = debug('logs:error');

@@ -3,7 +3,7 @@ const {Writable} = require('stream');
 const {INSERT_LOG} = require('src/queries/log');
 const logger = require('src/utils/logger');
 const config = require('src/config');
-const UNIQUE_CONSTRAINT = config.get('UNIQUE_CONSTRAINT');
+const UNIQUE = config.get('db:unique');
 
 /**
  * Logs writable stream
@@ -17,11 +17,11 @@ function logsStream(db, io) {
     async write(message, encoding, next) {
       try {
         await db.none(INSERT_LOG, message);
-        io.to(message.build_id).emit('log:new', message);
+        io.emit(`build:${message.build_id}:log:new`, message);
         logger.info(message);
         next();
       } catch(err) {
-        if (err.constraint === UNIQUE_CONSTRAINT) {
+        if (err.constraint === UNIQUE) {
           next();
         } else {
           logger.error(err);

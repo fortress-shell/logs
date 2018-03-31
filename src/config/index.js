@@ -1,28 +1,23 @@
 'use strict';
 const nconf = require('nconf');
 const path = require('path');
-nconf.env([
+
+const optional = [
   'NODE_ENV',
-  'DATABASE_URL',
+];
+const required = [
   'REDIS_URL',
+  'DATABASE_URL',
   'KAFKA_URL',
-  'UNIQUE_CONSTRAINT',
-]);
-nconf.defaults({
+];
+const defaults = {
   NODE_ENV: 'development',
-});
-nconf.required([
-  'REDIS_URL',
-  'DATABASE_URL',
-  'KAFKA_URL',
-  'UNIQUE_CONSTRAINT',
-]);
+};
+nconf.env(optional.concat(required));
+nconf.defaults(defaults);
+nconf.required(required);
 const NODE_ENV = nconf.get('NODE_ENV');
-nconf.file(NODE_ENV, {
-  file: path.join(__dirname, `${NODE_ENV}.json`),
-});
-nconf.file('default', {
-  file: path.join(__dirname, 'default.json'),
-});
+nconf.file(NODE_ENV, path.join(__dirname, `${NODE_ENV}.json`));
+nconf.file('default', path.join(__dirname, 'default.json'));
 
 module.exports = nconf;

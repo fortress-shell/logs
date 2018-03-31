@@ -6,9 +6,7 @@ const logger = require('src/utils/logger');
 const jsonStream = require('src/streams/json')();
 const logsStream = require('src/streams/logs')(db, io);
 const kafkaStream = require('src/resources/kafka')();
-const TIMEOUT = 10000
-const FAILURE = 1
-const SUCCESS = 0
+const [TIMEOUT, SUCCESS, FAILURE] = [10000, 0, 1];
 
 kafkaStream
   .on('error', shutdown)

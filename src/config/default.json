@@ -9,5 +9,8 @@
       "highWaterMark": 100,
       "maxTickMessages": 1000
     }
+  },
+  "db": {
+    "unique": "logs_unique"
   }
 }
