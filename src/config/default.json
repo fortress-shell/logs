@@ -11,6 +11,6 @@
     }
   },
   "db": {
-    "unique": "logs_unique"
+    "unique": "index_logs_on_build_id_and_position"
   }
 }

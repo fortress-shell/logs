@@ -4,14 +4,14 @@ exports.INSERT_LOG = `
   INSERT INTO logs(
     position,
     build_id,
-    stage,
-    command,
-    content
+    content,
+    created_at,
+    updated_at
   ) VALUES(
     $(build_id) :: INT,
     $(position),
-    $(stage),
-    $(command),
-    $(content)
+    $(content),
+    current_timestamp,
+    current_timestamp
   );
 `;

@@ -3,7 +3,7 @@ const {Transform} = require('stream');
 
 /**
  * Json transformer stream
- * @return {[type]} [description]
+ * @return {Transform} transformed stream of POJSO
  */
 function jsonStream() {
   return new Transform({
@@ -13,7 +13,7 @@ function jsonStream() {
       try {
         const content = JSON.parse(message.value);
         next(null, content);
-      } catch(e) {
+      } catch (e) {
         next(e);
       }
     },

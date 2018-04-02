@@ -17,10 +17,11 @@ function logsStream(db, io) {
     async write(message, encoding, next) {
       try {
         await db.none(INSERT_LOG, message);
-        io.emit(`build:${message.build_id}:log:new`, message);
+        io.to(message.user_id)
+          .emit(`build:${message.build_id}:log:new`, message);
         logger.info(message);
         next();
-      } catch(err) {
+      } catch (err) {
         if (err.constraint === UNIQUE) {
           next();
         } else {

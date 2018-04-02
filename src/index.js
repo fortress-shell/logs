@@ -15,8 +15,12 @@ kafkaStream
   .pipe(logsStream)
   .on('error', shutdown);
 
+/**
+ * Shutdown handler
+ * @param  {Error} topLevelError error causing shutdown
+ */
 function shutdown(topLevelError) {
-  console.log("Shutting down")
+  logger.info('Shutting down');
   if (topLevelError) {
     logger.warn(topLevelError);
     process.exit(FAILURE);

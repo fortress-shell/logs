@@ -9,6 +9,10 @@ const consumerOptions = Object.assign(options, {
   id: uuidv4(),
 });
 
+/**
+ * Kafka stream factory
+ * @return {ConsumerGroupStream} kafka readable stream
+ */
 function kafkaStream() {
   return new ConsumerGroupStream(consumerOptions, datacenters);
 }
