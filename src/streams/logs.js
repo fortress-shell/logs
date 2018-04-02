@@ -17,7 +17,7 @@ function logsStream(db, io) {
     async write(message, encoding, next) {
       try {
         await db.none(INSERT_LOG, message);
-        io.to(message.user_id)
+        io.to(`user:${message.user_id}`)
           .emit(`build:${message.build_id}:log:new`, message);
         logger.info(message);
         next();
