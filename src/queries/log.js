@@ -8,7 +8,7 @@ exports.INSERT_LOG = `
     created_at,
     updated_at
   ) VALUES(
-    $(build_id) :: INT,
+    $(build_id),
     $(position),
     $(content),
     current_timestamp,
