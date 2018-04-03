@@ -5,18 +5,20 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "cross-env DEBUG=logs:* NODE_PATH=. nodemon",
-    "test": "echo \"Error: no test specified\"",
+    "test": "cross-env NODE_PATH=. NODE_ENV=testing nyc mocha",
     "pretest": "eslint ."
   },
   "keywords": [],
   "author": "Mikhail Faraponov",
   "license": "ISC",
   "dependencies": {
+    "chai": "^4.1.2",
     "debug": "^3.1.0",
     "ioredis": "^3.2.2",
     "kafka-node": "^2.3.2",
     "nconf": "^0.10.0",
     "pg-promise": "^7.5.4",
+    "sinon": "^4.5.0",
     "socket.io-emitter": "^3.1.1",
     "uuid": "^3.2.1"
   },
