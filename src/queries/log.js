@@ -11,7 +11,7 @@ exports.INSERT_LOG = `
     $(build_id),
     $(position),
     $(content),
-    current_timestamp,
-    current_timestamp
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP
   );
 `;
