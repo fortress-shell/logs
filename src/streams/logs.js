@@ -18,7 +18,7 @@ function logsStream(db, io) {
       try {
         await db.none(INSERT_LOG, message);
         io.to(`user:${message.user_id}`)
-          .emit(`build:${message.build_id}:log:new`, message);
+          .emit(`logs:${message.build_id}:new`, message);
         logger.info(message);
         next();
       } catch (err) {

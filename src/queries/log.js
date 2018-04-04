@@ -2,8 +2,8 @@
 
 exports.INSERT_LOG = `
   INSERT INTO logs(
-    position,
     build_id,
+    position,
     content,
     created_at,
     updated_at
