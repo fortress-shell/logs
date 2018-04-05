@@ -6,8 +6,8 @@
       "sessionTimeout": 15000,
       "protocol": ["roundrobin"],
       "fromOffset": "latest",
-      "highWaterMark": 100,
-      "maxTickMessages": 1000
+      "highWaterMark": 4,
+      "maxTickMessages": 100
     }
   },
   "db": {
